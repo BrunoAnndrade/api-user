@@ -3,12 +3,17 @@ package com.brunoandrade.quarkussocial.rest;
 import com.brunoandrade.quarkussocial.domain.model.User;
 import com.brunoandrade.quarkussocial.domain.repository.UserRepository;
 import com.brunoandrade.quarkussocial.rest.dto.CreateUserRequest;
+import com.brunoandrade.quarkussocial.rest.dto.ResponseError;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.util.Set;
 
 @Path("/users")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -16,15 +21,24 @@ import jakarta.ws.rs.core.Response;
 public class UserResource {
 
     private final UserRepository repository;
+    private final Validator validator;
 
     @Inject
-    public UserResource(UserRepository repository) {
+    public UserResource(UserRepository repository, Validator validator) {
         this.repository = repository;
+        this.validator = validator;
     }
 
     @POST
     @Transactional
     public Response createUser(CreateUserRequest userRequest) {
+
+        Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(userRequest);
+        if (!violations.isEmpty()) {
+            ResponseError responseError = ResponseError.createFromValidation(violations);
+            return Response.status(Response.Status.BAD_REQUEST).entity(responseError).build();
+        }
+
         User user = new User();
         user.setName(userRequest.getName());
         user.setAge(userRequest.getAge());
