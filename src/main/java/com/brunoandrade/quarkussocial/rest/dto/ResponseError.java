@@ -2,13 +2,13 @@ package com.brunoandrade.quarkussocial.rest.dto;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.ws.rs.core.Response;
-
-import java.lang.constant.Constable;
+import lombok.Data;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Data
 public class ResponseError {
     public static final int UNPROCESSABLE_ENTITY_STATUS = 422;
 
@@ -28,22 +28,6 @@ public class ResponseError {
 
         String message = "Validation Error";
         return new ResponseError(message, errors);
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Collection<FieldError> getFieldErrors() {
-        return fieldErrors;
-    }
-
-    public void setFieldErrors(Collection<FieldError> fieldErrors) {
-        this.fieldErrors = fieldErrors;
     }
 
     public Response withStatusCode(int statusCode) {
