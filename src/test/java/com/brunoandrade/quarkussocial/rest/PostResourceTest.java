@@ -19,15 +19,23 @@ class PostResourceTest {
     @Inject
     UserRepository userRepository;
     Long userId;
+    Long userNotFollowerId;
 
     @BeforeEach
     @Transactional
     public void setUp(){
+        //Standard test user
         var user = new User();
         user.setName("Fulano");
         user.setAge(30);
         userRepository.persist(user);
         userId = user.getId();
+
+        var userNotFollower = new User();
+        userNotFollower.setName("Beltrano");
+        userNotFollower.setAge(33);
+        userRepository.persist(userNotFollower);
+        userNotFollowerId = userNotFollower.getId();
     }
 
     @Test
