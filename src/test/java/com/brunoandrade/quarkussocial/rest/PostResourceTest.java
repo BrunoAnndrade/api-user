@@ -20,6 +20,7 @@ class PostResourceTest {
     UserRepository userRepository;
     Long userId;
     Long userNotFollowerId;
+    Long userFollowerId;
 
     @BeforeEach
     @Transactional
@@ -36,6 +37,12 @@ class PostResourceTest {
         userNotFollower.setAge(33);
         userRepository.persist(userNotFollower);
         userNotFollowerId = userNotFollower.getId();
+
+        var userFollower = new User();
+        userFollower.setName("Ciclano");
+        userFollower.setAge(35);
+        userRepository.persist(userFollower);
+        userFollowerId = userFollower.getId();
     }
 
     @Test
