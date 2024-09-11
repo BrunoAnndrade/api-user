@@ -119,6 +119,14 @@ class PostResourceTest {
     @DisplayName("Should return 403 when user isn't a follower")
     public void listPostNotFollowerTest() {
 
+        given()
+                .pathParam("userId", userId)
+                .header("followerId", userNotFollowerId)
+        .when()
+                .get()
+        .then()
+                .statusCode(403)
+                .body(Matchers.is("You can't see these posts"));
     }
 
     @Test
