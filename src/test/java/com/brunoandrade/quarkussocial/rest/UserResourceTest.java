@@ -70,7 +70,7 @@ class UserResourceTest {
     @DisplayName("Should list all users")
     @Order(3)
     public void listAllUsersTest() {
-        var response =
+
                given()
                         .contentType(ContentType.JSON)
                .when()
@@ -78,6 +78,7 @@ class UserResourceTest {
                .then()
                        .statusCode(200)
                        .body("size()", Matchers.is(1));
+
 
     }
 }
