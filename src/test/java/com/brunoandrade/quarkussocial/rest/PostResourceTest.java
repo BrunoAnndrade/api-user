@@ -1,5 +1,6 @@
 package com.brunoandrade.quarkussocial.rest;
 
+import com.brunoandrade.quarkussocial.domain.model.Follower;
 import com.brunoandrade.quarkussocial.domain.model.User;
 import com.brunoandrade.quarkussocial.domain.repository.UserRepository;
 import com.brunoandrade.quarkussocial.rest.dto.CreatePostRequest;
@@ -43,6 +44,10 @@ class PostResourceTest {
         userFollower.setAge(35);
         userRepository.persist(userFollower);
         userFollowerId = userFollower.getId();
+
+        Follower follower = new Follower();
+        follower.setUser(user);
+        follower.setFollower(userFollower);
     }
 
     @Test
