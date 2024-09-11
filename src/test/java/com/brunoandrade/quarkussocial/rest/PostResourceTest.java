@@ -1,7 +1,10 @@
 package com.brunoandrade.quarkussocial.rest;
 
 import com.brunoandrade.quarkussocial.domain.model.Follower;
+import com.brunoandrade.quarkussocial.domain.model.Post;
 import com.brunoandrade.quarkussocial.domain.model.User;
+import com.brunoandrade.quarkussocial.domain.repository.FollowerRepository;
+import com.brunoandrade.quarkussocial.domain.repository.PostRepository;
 import com.brunoandrade.quarkussocial.domain.repository.UserRepository;
 import com.brunoandrade.quarkussocial.rest.dto.CreatePostRequest;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -19,6 +22,13 @@ class PostResourceTest {
 
     @Inject
     UserRepository userRepository;
+
+    @Inject
+    FollowerRepository followerRepository;
+
+    @Inject
+    PostRepository postRepository;
+
     Long userId;
     Long userNotFollowerId;
     Long userFollowerId;
@@ -26,6 +36,7 @@ class PostResourceTest {
     @BeforeEach
     @Transactional
     public void setUp(){
+
         //Standard test user
         var user = new User();
         user.setName("Fulano");
@@ -48,6 +59,13 @@ class PostResourceTest {
         Follower follower = new Follower();
         follower.setUser(user);
         follower.setFollower(userFollower);
+        followerRepository.persist(follower);
+
+        // CREATE POST
+        Post post = new Post();
+        post.setText("Some Text");
+        post.setUser(user);
+        postRepository.persist(post);
     }
 
     @Test
@@ -95,7 +113,6 @@ class PostResourceTest {
                 .get()
         .then()
                 .statusCode(404);
-
     }
 
     @Test
@@ -144,7 +161,13 @@ class PostResourceTest {
     @Test
     @DisplayName("Should return posts")
     public void listPostsTest() {
-
+        given()
+                .pathParam("userId", userId)
+                .header("followerId", userFollowerId)
+        .when()
+                .get()
+        .then()
+                .statusCode(200)
+                .body("size()", Matchers.is(1));
     }
-
 }
