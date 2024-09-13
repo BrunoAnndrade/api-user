@@ -12,9 +12,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/users/{userId}/followers")
 @Consumes(MediaType.APPLICATION_JSON)
