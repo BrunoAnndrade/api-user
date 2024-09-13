@@ -112,7 +112,6 @@ class FollowerResourceTest {
         var nonExistentUserId = 999;
 
         given()
-                .contentType(ContentType.JSON)
                 .pathParam("userId", nonExistentUserId)
                 .when()
                 .get()
@@ -137,5 +136,35 @@ class FollowerResourceTest {
         assertEquals(Response.Status.OK.getStatusCode(), response.statusCode());
         assertEquals(1, followersCount);
         assertEquals(1, followersContent.size());
+    }
+
+    @Test
+    @DisplayName("Should return 404 on unfollow user when userId doesn't exist")
+    public void userNotFoundWhenUnfollowingAUserTest() {
+
+        var nonExistentUserId = 999;
+
+        given()
+                .contentType(ContentType.JSON)
+                .pathParam("userId", nonExistentUserId)
+                .queryParam("followerId", userFollowerId)
+        .when()
+                .delete()
+        .then()
+                .statusCode(Response.Status.NOT_FOUND.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Should Unfollow an User")
+    public void unfollowUserTest() {
+
+
+        given()
+                .pathParam("userId", userId)
+                .queryParam("followerId", userFollowerId)
+        .when()
+                .delete()
+        .then()
+                .statusCode(Response.Status.NO_CONTENT.getStatusCode());
     }
 }
