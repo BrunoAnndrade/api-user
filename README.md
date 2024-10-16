@@ -6,7 +6,7 @@ This is a social network API developed to manage users, posts, and followers.
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Quarkus](https://img.shields.io/badge/quarkus-%234794EB.svg?style=for-the-badge&logo=quarkus&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/postgresql-4169e1?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ### Why FiadoSafe?
 
@@ -28,12 +28,12 @@ git clone https://github.com/your-username/project-name.git
 ```
 
 2. Install dependencies with Maven
-3. Install [MySQL](https://www.mysql.com/downloads/)
+3. Install [PostgreSQL](https://www.postgresql.org/download/)
 
 ### Accessing the API
 
 - Start the application with Maven
-- Make sure that MySQL is running locally at jdbc:postgresql://localhost:5432/quarkus-social.
+- Make sure that PostgreSQL is running locally at jdbc:postgresql://localhost:5432/quarkus-social.
 
 ### 1. **User Management**
 
